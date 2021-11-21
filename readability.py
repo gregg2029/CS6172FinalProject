@@ -24,7 +24,7 @@ print(id)
 
 response = openai.Classification.create(
     file=id,
-    query="movie is very good",
+    query="movie is very bad",
     search_model="ada", 
     model="davinci-codex", 
     max_examples=3
