@@ -1,0 +1,4 @@
+{"text": "def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_elem = elem + 1\n    new_arr.append(new_elem)\n  return new_arr", "label": "Readable"}
+{"text": "def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_arr.append(elem + 1)\n  return new_arr", "label": "Semi-Readable"}
+{"text": "def add_one(arr):\n  return [elem + 1 for elem in arr]", "label": "Semi-Unreadable"}
+{"text": "def mystery_func(boop):\n  return map(lambda x: x + 1, boop)", "label": Unreadable"}
