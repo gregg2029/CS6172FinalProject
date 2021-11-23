@@ -1,7 +1,79 @@
 tab = "\t"
+# Glorified string
+class Variable():
+    def __init__(self, name):
+        self.name = name
+    
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.name
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
+class Command():
+    def evaluate(self, environment):
+        assert False, "not implemented"
+
+    def __repr__(self):
+        return str(self)
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+    def __hash__(self): return hash(str(self))
+
+    def __ne__(self, other): return str(self) != str(other)
+
+    def __gt__(self, other): return str(self) > str(other)
+
+    def __lt__(self, other): return str(self) < str(other)
+
+class Sequence(Command):
+    def __init__(self, exp1, exp2):
+        self.exp1 = exp1
+        self.exp2 = exp2
+    
+    def evaluate(self, env):
+        new_env = self.exp1.evaluate(env)
+        return self.exp2.evaluate(new_env)
+    
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.exp1(indent, False, False) + ";\n"
+        ret_string += self.exp2(indent, False, False) + ";\n"
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
+    
+class Assign(Command):
+    def __init__(self, var, exp):
+        self.var = var
+        self.exp = exp
+    
+    def evaluate(self, environment):
+        environment[self.var.name] = self.exp
+        return environment[self.var.name]
+    
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.var + ":=" + self.exp.pretty_print(indent, False, False) + ";"
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
+    
+    def cost(self):
+        return 1
 class Expression():
-
     def evaluate(self, environment):
         assert False, "not implemented"
 
