@@ -73,10 +73,7 @@ class Number(Expression):
         return []
 
     def cost(self):
-        if self.n == 0 or self.n == -1:
-            return 1
-        else:
-            return 10
+        return 1
     
     def version_space_size(self):
         return 1
