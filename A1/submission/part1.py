@@ -32,6 +32,60 @@ class Expression():
     def version_space_size(self):
         assert False, "implement as part of homework"
 
+# Lambda calculus
+class Application(Expression):
+    def __init__(self, exp1, exp2):
+        self.exp1 = exp1
+        self.exp2 = exp2
+    
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += "(" + self.exp1.pretty_print(indent, False, False) + ") " + self.exp2.pretty_print(indent, False, True)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
+    
+    def evaluate(self, environment):
+        assert False, "not implemented"
+
+class Lambda(Expression):
+    def __init__(self, var, exp):
+        self.var = var # type: NumberVariable
+        self.exp = exp # type: Expression
+
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += "lambda " +  self.var.pretty_print(indent, False, False) + " = " + self.exp1.pretty_print(indent, False, False) + " in\n" + self.exp2.pretty_print(indent + 1, True, True)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
+    
+    def evaluate(self, environment):
+        assert False, "not implemented"
+class Let(Expression):
+    def __init__(self, var, exp1, exp2):
+        self.var = var
+        self.exp1 = exp1
+        self.exp2 = exp2
+    
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += "let " +  self.var.pretty_print(indent, False, False) + " = " + self.exp1.pretty_print(indent, False, False) + " in\n" + self.exp2.pretty_print(indent + 1, True, True)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
+    
+    def evaluate(self, environment):
+        assert False, "not implemented"
 
 class FALSE(Expression):
     return_type = "bool"
