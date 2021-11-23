@@ -1,4 +1,5 @@
 from part1 import *
+from custom_pretty_print import *
 
 from collections import defaultdict
 import itertools
@@ -175,7 +176,7 @@ def test_bottom_up():
         assert expression is not None, f"failed to synthesize a program when the size bound was {optimal_size}. the specific test case is {test_case}"
 
         print(
-            f"synthesized program:\t {expression.pretty_print()} in {time.time() - start_time} seconds")
+            f"synthesized program:\n{expression.pretty_print(0, True, True)} in {time.time() - start_time} seconds")
         for xs, y in test_case:
             assert expression.evaluate(
                 xs) == y, f"synthesized program {expression.pretty_print()} does not satisfy the following test case: {xs} --> {y}"
