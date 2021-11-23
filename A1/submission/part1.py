@@ -1,3 +1,5 @@
+tab = "     "
+
 class Expression():
 
     def evaluate(self, environment):
@@ -40,8 +42,15 @@ class FALSE(Expression):
     def __str__(self):
         return "False"
 
-    def pretty_print(self):
-        return "False"
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += "False"
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         return False
@@ -63,8 +72,15 @@ class Number(Expression):
     def __str__(self):
         return f"Number({self.n})"
 
-    def pretty_print(self):
-        return str(self.n)
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += str(self.n)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         return self.n
@@ -98,8 +114,15 @@ class NumberVariable(Expression):
     def __str__(self):
         return f"NumberVariable('{self.name}')"
 
-    def pretty_print(self):
-        return self.name
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.name
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         return environment[self.name]
@@ -124,8 +147,15 @@ class Plus(Expression):
     def __str__(self):
         return f"Plus({self.x}, {self.y})"
 
-    def pretty_print(self):
-        return f"(+ {self.x.pretty_print()} {self.y.pretty_print()})"
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.x.pretty_print(indent, False, False) + " + " + self.y.pretty_print(indent, False, False)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         x = self.x.evaluate(environment)
@@ -147,8 +177,15 @@ class Times(Expression):
     def __str__(self):
         return f"Times({self.x}, {self.y})"
 
-    def pretty_print(self):
-        return f"(* {self.x.pretty_print()} {self.y.pretty_print()})"
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.x.pretty_print(indent, False, False) + " * " + self.y.pretty_print(indent, False, False)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         x = self.x.evaluate(environment)
@@ -170,8 +207,15 @@ class LessThan(Expression):
     def __str__(self):
         return f"LessThan({self.x}, {self.y})"
 
-    def pretty_print(self):
-        return f"(< {self.x.pretty_print()} {self.y.pretty_print()})"
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.x.pretty_print(indent, False, False) + " < " + self.y.pretty_print(indent, False, False)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         x = self.x.evaluate(environment)
@@ -193,8 +237,15 @@ class And(Expression):
     def __str__(self):
         return f"And({self.x}, {self.y})"
 
-    def pretty_print(self):
-        return f"(and {self.x.pretty_print()} {self.y.pretty_print()})"
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += self.x.pretty_print(indent, True, False) + " and " + self.y.pretty_print(indent, False, False)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         x = self.x.evaluate(environment)
@@ -216,8 +267,15 @@ class Not(Expression):
     def __str__(self):
         return f"Not({self.x})"
 
-    def pretty_print(self):
-        return f"(not {self.x.pretty_print()})"
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += "not " + self.x.pretty_print(indent, False, False)
+        if bool_nln:
+            ret_string += "\n"
+        return ret_string
 
     def evaluate(self, environment):
         x = self.x.evaluate(environment)
@@ -238,8 +296,19 @@ class If(Expression):
     def __str__(self):
         return f"If({self.test}, {self.yes}, {self.no})"
 
-    def pretty_print(self):
-        return f"(if {self.test.pretty_print()} {self.yes.pretty_print()} {self.no.pretty_print()})"
+    def pretty_print(self, indent, bool_ind, bool_nln):
+        ret_string = ""
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += "if (" + self.test.pretty_print(indent, False, False) + "):" + "\n"
+        ret_string += self.yes.pretty_print(indent + 1, True, True)
+        if bool_ind:
+            for x in range(indent):
+                ret_string += tab
+        ret_string += "else:\n"
+        ret_string += self.no.pretty_print(indent + 1, True, True)
+        return ret_string
 
     def evaluate(self, environment):
         test = self.test.evaluate(environment)
