@@ -1,5 +1,4 @@
 from part1 import *
-from custom_pretty_print import *
 
 from collections import defaultdict
 import itertools
