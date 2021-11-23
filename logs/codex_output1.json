@@ -1,0 +1,38 @@
+{
+  "completion": "cmpl-46rDTRNyMSLcxWnZTWpJvknZiGlSY",
+  "file": "file-XJgmDAItSPa7GykZtuVYbrbs",
+  "label": "Readable",
+  "model": "davinci-codex:2021-08-03",
+  "object": "classification",
+  "search_model": "ada:2020-05-03",
+  "selected_examples": [
+    {
+      "document": 2,
+      "label": "Semi-readable",
+      "object": "search_result",
+      "score": 121.601,
+      "text": "def find_object(target_obj, arr):\n    for item in arr:\n        if item == target_obj:\n            return True\n\n    return False"
+    },
+    {
+      "document": 3,
+      "label": "Semi-unreadable",
+      "object": "search_result",
+      "score": 118.288,
+      "text": "def elem_in_list(element, check_list):\n  len_list = len(check_list)\n  for ind in range(len_list):\n    if check_list[ind] == element:\n      return True\n  \n  return False"
+    },
+    {
+      "document": 1,
+      "label": "Readable",
+      "object": "search_result",
+      "score": 140.41,
+      "text": "def contains(item, arr):\n    return item in arr"
+    },
+    {
+      "document": 0,
+      "label": "Unreadable",
+      "object": "search_result",
+      "score": 158.483,
+      "text": "def obj_in_array(target_obj, arr):\n    return next(filter(lambda arr_item: arr_item == target_obj, arr), None) != None"
+    }
+  ]
+}
