@@ -1,4 +1,4 @@
-tab = "     "
+tab = "\t"
 
 class Expression():
 
