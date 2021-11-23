@@ -128,7 +128,7 @@ def test_dcsolve():
     for test_case in test_cases:
         start_time = time.time()
         expression = dcsolve(operators, terminals, test_case)
-        print(f"synthesized program:\t {expression.pretty_print()} in {time.time() - start_time} seconds")
+        print(f"synthesized program:\n{expression.pretty_print(0, True, True)} in {time.time() - start_time} seconds")
         for xs, y in test_case:
             assert expression.evaluate(xs) == y, f"synthesized program {expression.pretty_print()} does not satisfy the following test case: {xs} --> {y}"
             print(f"passes test case {xs} --> {y}")
