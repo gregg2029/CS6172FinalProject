@@ -11,7 +11,6 @@ import numpy as np
 
 openai.api_key = config('OPENAI_TOKEN')
 
-real_labels = ["Readable", "Semireadable", "Sortaunreadable", "Unreadable"]
 labels = ["Readable", "Acceptable", "Difficult", "Unreadable"]
 labels = [label.strip().lower().capitalize() for label in labels]
 
@@ -42,7 +41,7 @@ print("result: ", result)
 labels = [" " + label for label in labels]
 top_logprobs = result["completion"]["choices"][0]["logprobs"]["top_logprobs"][1]
 print("top_logprobs: ", top_logprobs)
-
+print("results: ", result)
 probs = {
     sublabel: np.exp(logp) 
     for sublabel, logp in top_logprobs.items()
@@ -54,7 +53,6 @@ for sublabel, prob in probs.items():
             label_probs[label] = prob
 
 
-print("Labels: ", label_probs)
 # Fill in the probability for the special "Unknown" label.
 if sum(label_probs.values()) < 1.0:
     label_probs[" Unknown"] = 1.0 - sum(label_probs.values())
@@ -72,3 +70,4 @@ for label in label_probs.keys():
 
 print("Cost: ", cost)
 
+print("Labels: ", label_probs)
