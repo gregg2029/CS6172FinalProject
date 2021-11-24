@@ -22,6 +22,7 @@ result = openai.Classification.create(
     model="davinci-codex",
     logprobs=5,
     labels=labels,
+    max_examples=2,
     examples=[
         ["def contains(item, arr):\n    return item in arr", "Readable"],
         ["def find_object(target_obj, arr):\n    for item in arr:\n        if item == target_obj:\n            return True\n\n    return False", "Acceptable"],
@@ -30,13 +31,14 @@ result = openai.Classification.create(
         ["def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_elem = elem + 1\n    new_arr.append(new_elem)\n  return new_arr", "Readable"],
         ["def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_arr.append(elem + 1)\n  return new_arr", "Acceptable"],
         ["def add_one(arr):\n  return [elem + 1 for elem in arr]", "Acceptable"],
-        ["def add_one(arr):\n  return map(lambda x: x + 1, arr)", "Readable"],
+        ["def add_one(arr):\n  return map(lambda x: x + 1, arr)", "Difficult"],
     ]
 )
 
 # Take the starting tokens for probability estimation.
 # Labels should have distinct starting tokens.
 # Here tokens are case-sensitive.
+print("result: ", result)
 labels = [" " + label for label in labels]
 top_logprobs = result["completion"]["choices"][0]["logprobs"]["top_logprobs"][1]
 print("top_logprobs: ", top_logprobs)
@@ -55,6 +57,18 @@ for sublabel, prob in probs.items():
 print("Labels: ", label_probs)
 # Fill in the probability for the special "Unknown" label.
 if sum(label_probs.values()) < 1.0:
-    label_probs[" Unreadable"] += 1.0 - sum(label_probs.values())
+    label_probs[" Unknown"] = 1.0 - sum(label_probs.values())
 
-print(label_probs)
+label_weights = {}
+label_weights[" Readable"] = 0.1
+label_weights[" Acceptable"] = 1
+label_weights[" Difficult"] = 10
+label_weights[" Unreadable"] = 100
+label_weights[" Unknown"] = 25
+
+cost = 0
+for label in label_probs.keys():
+    cost += label_probs[label] * label_weights[label]
+
+print("Cost: ", cost)
+
