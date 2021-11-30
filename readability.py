@@ -18,7 +18,7 @@ labels = [label.strip().lower().capitalize() for label in labels]
 
 def classifier(query):
     result = openai.Classification.create(
-        query=query,
+        query= query,
         search_model="ada", 
         model="davinci-codex",
         logprobs=5,

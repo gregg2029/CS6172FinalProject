@@ -7,8 +7,6 @@ import numpy as np
 
 openai.api_key = config('OPENAI_TOKEN')
 
-
-
 def classifier(query):
     labels = ["Readable", "Acceptable", "Difficult", "Unreadable"]
     labels = [label.strip().lower().capitalize() for label in labels]
@@ -77,7 +75,7 @@ def cost(classification):
 for x in range(10):
   response = openai.Completion.create(
     engine="davinci",
-    prompt="Create a python function that adds one to each element in a list :\n\ndef",
+    prompt="Create a python function that finds if an item is in an array :\n\ndef",
     temperature=1,
     max_tokens=60,
     top_p=1.0,
@@ -87,8 +85,8 @@ for x in range(10):
   )
 
   code = response.choices[0].text
-  print("code: ", code)
   classification = classifier(code)
   code_cost = cost(classification)
 
-  print("Code: ", code, "\n\tScore: ", code_cost)
+  print("\tCode: ", code, "\n\tScore: ", code_cost)
+  print("===================================================================")
