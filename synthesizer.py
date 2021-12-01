@@ -72,11 +72,11 @@ def cost(classification):
 
     return cost
 
-for x in range(10):
+for x in range(1):
   response = openai.Completion.create(
     engine="davinci",
-    prompt="Create a python function that finds if an item is in an array :\n\ndef",
-    temperature=1,
+    prompt="Create a python function that finds if an item is in an int array :\n\npublic static boolean",
+    temperature=0.4,
     max_tokens=60,
     top_p=1.0,
     frequency_penalty=0.0,
@@ -88,5 +88,12 @@ for x in range(10):
   classification = classifier(code)
   code_cost = cost(classification)
 
+  code_file = open("codeFile.java", "w")
+  code_file.write("public static boolean" + code)
+  code_file.close()
+
   print("\tCode: ", code, "\n\tScore: ", code_cost)
   print("===================================================================")
+
+
+
