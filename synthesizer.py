@@ -72,6 +72,23 @@ def cost(classification):
 
     return cost
 
+def java_format(function, return_type):
+    ret_str = "class A{\n"
+    ret_str += "public static " + return_type + function + "\n\n"
+
+    function_name = function.split("(")[0]
+    print("func name: ", function_name)
+
+    main_str = "public static void main(String[] args){\n"
+    main_str += "int[] testArr = {1, 2, 3, 4, 5};\n"
+    main_str += "System.out.println(" + function_name + "(testArr, 4));\n"
+
+    ret_str += main_str
+    ret_str += "}\n}"
+
+    return ret_str
+
+
 for x in range(1):
   response = openai.Completion.create(
     engine="davinci",
@@ -89,7 +106,7 @@ for x in range(1):
   code_cost = cost(classification)
 
   code_file = open("codeFile.java", "w")
-  code_file.write("public static boolean" + code)
+  code_file.write(java_format(code, "boolean"))
   code_file.close()
 
   print("\tCode: ", code, "\n\tScore: ", code_cost)
