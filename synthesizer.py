@@ -97,10 +97,7 @@ def java_format(function, return_type):
     ret_str = ""
 
     # Import statements
-    import_str = """import java.io.File;  // Import the File class
-import java.io.FileWriter;   // Import the FileWriter class
-import java.io.IOException;  // Import the IOException class to handle errors
-        """
+    import_str = "import java.io.*;"
     ret_str += import_str + "\n\n"
 
     # Create class
@@ -110,6 +107,9 @@ import java.io.IOException;  // Import the IOException class to handle errors
     file_write_str = """public static FileWriter createFile() {
   try {
     FileWriter myWriter = new FileWriter("codeTestOutput.txt");
+    PrintWriter clearWriter = new PrintWriter("codeTestOutput.txt");
+    clearWriter.print("");
+    clearWriter.close();
     return myWriter;
   } 
   catch (IOException e) {
@@ -195,11 +195,14 @@ def verify_tests(expected_results):
     return True
 
 if __name__ == "__main__":
-    for x in range(1):
+    valid_programs = []
+    correct_program_count = 0
+    wrong_program_count = 0
+    while correct_program_count < 4:
         response = openai.Completion.create(
             engine="davinci",
             prompt=synthesis_function + " :\n\npublic static " + synthesis_type,
-            temperature=0.4,
+            temperature=0.5,
             max_tokens=60,
             top_p=1.0,
             frequency_penalty=0.0,
@@ -211,15 +214,24 @@ if __name__ == "__main__":
         classification = classifier(code)
         code_cost = cost(classification)
 
-        code_file = open("codeFile.java", "w")
-        formatted_java, expected_results = java_format(code, synthesis_type)
-        code_file.write(formatted_java)
-        code_file.close()
+        try:
+            code_file = open("codeFile.java", "w")
+            formatted_java, expected_results = java_format(code, synthesis_type)
+            code_file.write(formatted_java)
+            code_file.close()
 
-        subprocess.call("./execute_synthesized_function.sh")
+            subprocess.call("./execute_synthesized_function.sh")
 
-        passes_tests = verify_tests(expected_results)
+            passes_tests = verify_tests(expected_results)
+        except ValueError:
+            wrong_program_count += 1
+            passes_tests = False
 
-        print("\tCode: ", code, "\n\tScore: ", code_cost)
-        print("Passed: ", passes_tests)
-        print("===================================================================")
+        if(passes_tests):
+            correct_program_count += 1
+            valid_programs.append((code, code_cost))
+            print("\tCode: ", code, "\n\tScore: ", code_cost)
+            print("===================================================================")
+        else:
+            print("Incorrect programs generated: ", wrong_program_count)
+            print("===================================================================")
