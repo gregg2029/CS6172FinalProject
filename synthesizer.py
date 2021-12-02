@@ -5,6 +5,7 @@ import openai
 from decouple import config
 import numpy as np
 import subprocess
+import os
 
 openai.api_key = config('OPENAI_TOKEN')
 
@@ -77,8 +78,9 @@ def cost(classification):
     if sum(label_probs.values()) < 1.0:
         label_probs[" Unknown"] = 1.0 - sum(label_probs.values())
 
-    for label_prob in label_probs.keys():
-        print(label_prob, ": ", label_probs[label_prob])
+    # Print expected probabilities
+    # for label_prob in label_probs.keys():
+    #     print(label_prob, ": ", label_probs[label_prob])
 
     label_weights = {}
     label_weights[" Readable"] = 0.1
@@ -202,8 +204,15 @@ def clear_file():
 def verify_tests(expected_results):
     with open("codeTestOutput.txt") as file_reader:
         count = 0
+
+        # Check if file is empty
+        file_reader.seek(0, os.SEEK_END)
+        if(file_reader.tell()):
+            file_reader.seek(0)
+        else:
+            return False
+
         for line in file_reader:
-            print(line.strip())
             if line.strip() != expected_results[count]:
                 return False
             count += 1
@@ -246,7 +255,6 @@ if __name__ == "__main__":
 
             passes_tests = verify_tests(expected_results)
         except ValueError:
-            wrong_program_count += 1
             passes_tests = False
 
         if(passes_tests):
