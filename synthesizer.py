@@ -44,6 +44,7 @@ def classifier(query):
             ["def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_arr.append(elem + 1)\n  return new_arr", "Acceptable"],
             ["def add_one(arr):\n  return [elem + 1 for elem in arr]",
              "Acceptable"],
+
             ["def add_one(arr):\n  return map(lambda x: x + 1, arr)",
              "Difficult"],
         ]
@@ -107,9 +108,6 @@ def java_format(function, return_type):
     file_write_str = """public static FileWriter createFile() {
   try {
     FileWriter myWriter = new FileWriter("codeTestOutput.txt");
-    PrintWriter clearWriter = new PrintWriter("codeTestOutput.txt");
-    clearWriter.print("");
-    clearWriter.close();
     return myWriter;
   } 
   catch (IOException e) {
@@ -153,7 +151,12 @@ public static void closeFile(FileWriter writer){
     function_args = []
 
     for arg in function_args_whole:
-        arg_type = arg.strip().split(" ")[0]
+        parsed_arr = arg.strip().split(" ")
+        if len(parsed_arr) > 2:
+            arg_type = "".join(parsed_arr[:-1])
+        else:
+            arg_type = parsed_arr[0]
+
         function_args.append(arg_type)
 
     # print("func name: ", function_name)
@@ -174,7 +177,12 @@ public static void closeFile(FileWriter writer){
                 test_args += ", "
             else:
                 first = False
-            test_args += context[arg_type]
+
+            if arg_type in context.keys():
+                test_args += context[arg_type]
+            else:
+                raise ValueError
+
         test_args += ")"
         main_str += "writeFile(writer, String.valueOf(" + \
             function_name + test_args + "));\n"
@@ -185,24 +193,35 @@ public static void closeFile(FileWriter writer){
 
     return (ret_str, expected_arr)
 
+
+def clear_file():
+    file = open("codeTestOutput.txt", "r+")
+    file.truncate(0)
+    file.close()
+
 def verify_tests(expected_results):
     with open("codeTestOutput.txt") as file_reader:
         count = 0
         for line in file_reader:
+            print(line.strip())
             if line.strip() != expected_results[count]:
                 return False
             count += 1
-    return True
+        return True
+
 
 if __name__ == "__main__":
     valid_programs = []
     correct_program_count = 0
     wrong_program_count = 0
     while correct_program_count < 4:
+        # Clear file as precaution
+        clear_file()
+
         response = openai.Completion.create(
             engine="davinci",
             prompt=synthesis_function + " :\n\npublic static " + synthesis_type,
-            temperature=0.5,
+            temperature=1,
             max_tokens=60,
             top_p=1.0,
             frequency_penalty=0.0,
@@ -214,9 +233,12 @@ if __name__ == "__main__":
         classification = classifier(code)
         code_cost = cost(classification)
 
+        print("\tCode: ", code, "\n\tScore: ", code_cost)
+
         try:
             code_file = open("codeFile.java", "w")
-            formatted_java, expected_results = java_format(code, synthesis_type)
+            formatted_java, expected_results = java_format(
+                code, synthesis_type)
             code_file.write(formatted_java)
             code_file.close()
 
@@ -230,8 +252,9 @@ if __name__ == "__main__":
         if(passes_tests):
             correct_program_count += 1
             valid_programs.append((code, code_cost))
-            print("\tCode: ", code, "\n\tScore: ", code_cost)
+            print("Correct programs generated: ", correct_program_count)
             print("===================================================================")
         else:
+            wrong_program_count += 1
             print("Incorrect programs generated: ", wrong_program_count)
             print("===================================================================")
