@@ -76,7 +76,7 @@ def java_format(function, return_type):
     ret_str = "class A{\n"
     ret_str += "public static " + return_type + function + "\n\n"
 
-    function_name = function.split("(")[0]
+    function_name = function.split("(")[0].strip()
     print("func name: ", function_name)
 
     main_str = "public static void main(String[] args){\n"
