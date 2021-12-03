@@ -266,3 +266,24 @@ if __name__ == "__main__":
             wrong_program_count += 1
             print("Incorrect programs generated: ", wrong_program_count)
             print("===================================================================")
+
+    final_cost = 500
+    final_code = ""
+    final_file = open("synthesizedProgram.java", "w")
+    for code, cost in valid_programs:
+        
+        final_file.write("//Program: \n")
+        final_file.write(code.strip() + "\n")
+        final_file.write("//Cost: " + str(cost) + "\n")
+        final_file.write("//===================================================\n")
+
+        if cost < final_cost:
+            final_cost = cost
+            final_code = code
+    
+    final_file.write("\n\n//Synthesized Program:\n")
+    final_file.write(final_code.strip() + "\n")
+    final_file.write("//Program cost: " + str(final_cost))
+    final_file.close()
+    
+
