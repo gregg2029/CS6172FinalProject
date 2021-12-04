@@ -10,7 +10,7 @@ from verifier import verify
 openai.api_key = config('OPENAI_TOKEN')
 
 # details of the problem we want to synthesize
-problem = inputs[0]
+problem = inputs[2]
 
 def clear_file():
     file = open("codeTestOutput.txt", "r+")
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         clear_file()
 
         response = openai.Completion.create(
-            engine="davinci",
+            engine="davinci-codex",
             prompt=problem.get("query") + " :\n\npublic static " + problem.get("type"),
             temperature=1,
             max_tokens=60,

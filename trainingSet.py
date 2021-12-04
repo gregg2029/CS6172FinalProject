@@ -27,3 +27,5 @@ trainingSet = [
   ["fibonacci(int nth) { if(nth == 0) { return 0; } else if(nth == 1) { return 1; } else { return fibonacci(nth-1)+fibonacci(nth-2); } }", "Acceptable"],
   ["fibNth ( int n ) { if ( n == 0 ) { return 0 ; } else if ( n == 1 ) { return 1 ; } else { return fibNth ( n - 1 ) + fibNth ( n - 2 ); } }", "Acceptable"]
 ]
+
+onlyFunctions = list(map(lambda trainingData: trainingData[0], trainingSet))
