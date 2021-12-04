@@ -20,4 +20,10 @@ trainingSet = [
     "Acceptable"],
   ["def add_one(arr):\n  return map(lambda x: x + 1, arr)",
     "Difficult"],
+  # fibonacci
+  ["fibonacci(int n) { if (n < 2) return n; return fibonacci(n - 1) + fibonacci(n - 2); }", "Readable"],
+  ["fibonacci(int n) { if(n < 2) { return n; } else { return fibonacci(n - 2) + fibonacci(n - 1); } }", "Readable"],
+  ["fib ( int n ){ return n == 0 ? 0 : n == 1 ? 1 : fib ( n - 1 ) + fib ( n - 2 ); }", "Unreadable"],
+  ["fibonacci(int nth) { if(nth == 0) { return 0; } else if(nth == 1) { return 1; } else { return fibonacci(nth-1)+fibonacci(nth-2); } }", "Acceptable"],
+  ["fibNth ( int n ) { if ( n == 0 ) { return 0 ; } else if ( n == 1 ) { return 1 ; } else { return fibNth ( n - 1 ) + fibNth ( n - 2 ); } }", "Acceptable"]
 ]
