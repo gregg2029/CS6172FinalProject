@@ -1,10 +1,8 @@
 # To activate env run: $ source activate cs6172_env
 # To deactivate env run $ conda deactivate
 
-import os
 import openai
 from decouple import config
-from collections import defaultdict
 import numpy as np
 from trainingSet import trainingSet
 

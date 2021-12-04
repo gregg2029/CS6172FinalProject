@@ -1,3 +1,4 @@
+# add dictionaries with the properties query, type, and test_cases to synthesize new problems
 inputs = [
   {
     "query": "Create a python function that finds if an item is in an int array",
