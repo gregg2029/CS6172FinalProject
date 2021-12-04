@@ -2,14 +2,11 @@
 # To deactivate env run $ conda deactivate
 
 import os
-import torch
 import openai
 from decouple import config
 from collections import defaultdict
 import numpy as np
 
-
-openai.api_key = config('OPENAI_TOKEN')
 
 labels = ["Readable", "Acceptable", "Difficult", "Unreadable"]
 labels = [label.strip().lower().capitalize() for label in labels]
@@ -17,9 +14,11 @@ labels = [label.strip().lower().capitalize() for label in labels]
 # TEST SET
 
 def classifier(query):
+    labels = ["Readable", "Acceptable", "Difficult", "Unreadable"]
+    labels = [label.strip().lower().capitalize() for label in labels]
     result = openai.Classification.create(
-        query= query,
-        search_model="ada", 
+        query=query,
+        search_model="ada",
         model="davinci-codex",
         logprobs=5,
         labels=labels,
@@ -31,14 +30,20 @@ def classifier(query):
             ["def obj_in_array(target_obj, arr):\n    return next(filter(lambda arr_item: arr_item == target_obj, arr), None) != None", "Unreadable"],
             ["def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_elem = elem + 1\n    new_arr.append(new_elem)\n  return new_arr", "Readable"],
             ["def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_arr.append(elem + 1)\n  return new_arr", "Acceptable"],
-            ["def add_one(arr):\n  return [elem + 1 for elem in arr]", "Acceptable"],
-            ["def add_one(arr):\n  return map(lambda x: x + 1, arr)", "Difficult"],
+            ["def add_one(arr):\n  return [elem + 1 for elem in arr]",
+             "Acceptable"],
+
+            ["def add_one(arr):\n  return map(lambda x: x + 1, arr)",
+             "Difficult"],
         ]
     )
 
     return result
 
+
 def cost(classification):
+    labels = ["Readable", "Acceptable", "Difficult", "Unreadable"]
+    labels = [label.strip().lower().capitalize() for label in labels]
 
     # Take the starting tokens for probability estimation.
     # Labels should have distinct starting tokens.
@@ -47,7 +52,7 @@ def cost(classification):
     top_logprobs = classification["completion"]["choices"][0]["logprobs"]["top_logprobs"][1]
 
     probs = {
-        sublabel: np.exp(logp) 
+        sublabel: np.exp(logp)
         for sublabel, logp in top_logprobs.items()
     }
     label_probs = {}
@@ -56,13 +61,13 @@ def cost(classification):
             if sublabel in label:
                 label_probs[label] = prob
 
-
     # Fill in the probability for the special "Unknown" label.
     if sum(label_probs.values()) < 1.0:
         label_probs[" Unknown"] = 1.0 - sum(label_probs.values())
-    
-    for label_prob in label_probs.keys():
-        print(label_prob, ": ", label_probs[label_prob])
+
+    # Print expected probabilities
+    # for label_prob in label_probs.keys():
+    #     print(label_prob, ": ", label_probs[label_prob])
 
     label_weights = {}
     label_weights[" Readable"] = 0.1
