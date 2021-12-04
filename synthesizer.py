@@ -3,7 +3,6 @@
 
 import openai
 from decouple import config
-import numpy as np
 import subprocess
 import os
 from readability import *
@@ -92,9 +91,6 @@ public static void closeFile(FileWriter writer){
 
         function_args.append(arg_type)
 
-    # print("func name: ", function_name)
-    # print("func args: ", function_args_whole)
-    # print("arg types: ", function_args)
 
     # Main function
     main_str = "public static void main(String[] args){\n"
@@ -191,12 +187,11 @@ if __name__ == "__main__":
         if(passes_tests):
             correct_program_count += 1
             valid_programs.append((code, code_cost))
-            print("Correct programs generated: ", correct_program_count)
-            print("===================================================================")
         else:
             wrong_program_count += 1
-            print("Incorrect programs generated: ", wrong_program_count)
-            print("===================================================================")
+        print("Correct programs generated: ", correct_program_count)
+        print("Incorrect programs generated: ", wrong_program_count)
+        print("===================================================================")
 
     final_cost = 500
     final_code = ""
