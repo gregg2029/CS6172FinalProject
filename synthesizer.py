@@ -40,18 +40,28 @@ if __name__ == "__main__":
         classification = classifier(code)
         code_cost = cost(classification)
 
-        print("\tCode: ", code, "\n\tScore: ", code_cost)
-        
         passes_tests = verify(code, problem)
         
         if(passes_tests):
             correct_program_count += 1
             valid_programs.append((code, code_cost))
+            print("CORRECT")
         else:
             wrong_program_count += 1
+            print("INCORRECT")
+
+        print("\tCode: ", code, "\n\tScore: ", code_cost)
+        
         print("Correct programs generated: ", correct_program_count)
         print("Incorrect programs generated: ", wrong_program_count)
         print("===================================================================")
+    
+    valid_programs.sort(key=lambda a: a[1])
+
+    print("Valid Synthesized Programs:")
+    for program in valid_programs:
+        print("\tCode: ", program[0])
+        print("\tScore: ", program[1])
 
     final_cost = 500
     final_code = ""
