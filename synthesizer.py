@@ -6,25 +6,11 @@ from decouple import config
 import subprocess
 import os
 from readability import *
+from inputs import inputs
 
 openai.api_key = config('OPENAI_TOKEN')
 
-# Define test set as strings
-test_set = []
-test_set.append(({"int[]": "new int[] {1, 2, 3, 4}", "int": "3"}, "true"))
-test_set.append(({"int[]": "new int[] {1, 2, 3, 4}", "int": "7"}, "false"))
-test_set.append(({"int[]": "new int[] {1, 2, 3, 4}", "int": "4"}, "true"))
-test_set.append(
-    ({"int[]": "new int[] {1, 2, 3, 4, 4, 4}", "int": "4"}, "true"))
-test_set.append(
-    ({"int[]": "new int[] {1, 2, 3, 4, 4, 4}", "int": "6"}, "false"))
-
-# Define function to be synthesized
-synthesis_function = "Create a python function that finds if an item is in an int array"
-
-# Define function Java return type
-synthesis_type = "boolean"
-
+problem = inputs[0]
 
 def java_format(function, return_type):
     ret_str = ""
@@ -97,7 +83,7 @@ public static void closeFile(FileWriter writer){
     main_str += "FileWriter writer = createFile();\n"
 
     expected_arr = []
-    for context, expected in test_set:
+    for context, expected in problem.get("test_cases"):
         expected_arr.append(expected)
         test_args = "("
         first = True
@@ -156,7 +142,7 @@ if __name__ == "__main__":
 
         response = openai.Completion.create(
             engine="davinci",
-            prompt=synthesis_function + " :\n\npublic static " + synthesis_type,
+            prompt=problem.get("query") + " :\n\npublic static " + problem.get("type"),
             temperature=1,
             max_tokens=60,
             top_p=1.0,
@@ -174,7 +160,7 @@ if __name__ == "__main__":
         try:
             code_file = open("codeFile.java", "w")
             formatted_java, expected_results = java_format(
-                code, synthesis_type)
+                code, problem.get("type"))
             code_file.write(formatted_java)
             code_file.close()
 
