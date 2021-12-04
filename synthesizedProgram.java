@@ -1,55 +1,21 @@
 //Program: 
-findIn(int[] yourArray, int itemToFind) { 
-  for (int i=0; i < yourArray.length; i++) { 
-    if( yourArray[i] == itemToFind ){ 
-      int index = i; 
-      return true; 
-    } 
-  } 
-  return false; 
-}
-//Cost: 31.329101912519988
+indexOf(int[] list, int value) { if (list.length == 0) { return true; } for (int i = 0; i < list.length; i++) { if (list[i] == value) { return true; } } return false; }
+//Cost: 30.131359851683122
 //===================================================
 //Program: 
-isInArray(int[] nums, int item) { 
-  for(int count=0;count<nums.length;count++) { 
-    if(nums[count] == item) { 
-      return true; 
-    } 
-  } 
-  return false; 
-}
-//Cost: 37.19122055002444
+contains ( int [] array, int searchKey ){ for ( int i = 0 ; i < array. length ; i++){ if ( array [ i ] == searchKey ){ return true ; } } return false ; }
+//Cost: 41.444543096397574
 //===================================================
 //Program: 
-find(int[] a, int b) { 
-  if (a == null) return false; 
-  for (int j = 0; j < a.length; j++) if (a[j] == b) { 
-    return true; 
-  } 
-  return false; 
-}
-//Cost: 26.99513321167069
+contains(int[] s, int v) { for (int i : s) { if (i == v) { return true; } } return false; }
+//Cost: 40.77999428967506
 //===================================================
 //Program: 
-myfunc ( int [] array, int itemToFind) { 
-  for ( int i = 0 ; i < array.length; i++) { 
-    if (array[i] == itemToFind) { 
-      return true ; 
-    } 
-  } 
-  return false ; 
-}
-//Cost: 36.31498847785252
+selectItem ( int [ ] nums , int item ) { for ( int i = 0 ; i < nums. length ; i ++ ) { if ( nums [ i ] == item ) { return true ; } } return false ; }
+//Cost: 39.16876489446908
 //===================================================
 
 
 //Synthesized Program:
-find(int[] a, int b) { 
-  if (a == null) return false; 
-  for (int j = 0; j < a.length; j++) if (a[j] == b) { 
-    return true; 
-  } 
-  return false; 
-}
-//Program cost: 26.99513321167069
+indexOf(int[] list, int value) { if (list.length == 0) { return true; } for (int i = 0; i < list.length; i++) { if (list[i] == value) { return true; } } return false; }
+//Program cost: 30.131359851683122
