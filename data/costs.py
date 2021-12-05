@@ -17,15 +17,14 @@ programs = [
   "contains( int [] arr, int i) { for ( int c = 0 ; c<arr.length; c++) if (arr[c] == i) return true ; return false ; }",
   "isInside(int[] i, int item) { for (int i2 = 0; i2 <= i.length - 1; i2++) { if (i[i2] == item) { return true; } } return false; }",
   "is(int[] a, int value) { for(int i=0;i< a.length;i++) { if(a[i]== value) { return true; } } return false; }",
-  "def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_elem = elem + 1\n    new_arr.append(new_elem)\n  return new_arr",
-  "def add_one(arr):\n  new_arr = []\n  for elem in arr:\n    new_arr.append(elem + 1)\n  return new_arr",
-  "def add_one(arr):\n  return [elem + 1 for elem in arr]",
-  "def add_one(arr):\n  return map(lambda x: x + 1, arr)",
   "fibonacci(int n) { if (n < 2) return n; return fibonacci(n - 1) + fibonacci(n - 2); }",
   "fibonacci(int n) { if(n < 2) { return n; } else { return fibonacci(n - 2) + fibonacci(n - 1); } }",
   "fib ( int n ){ return n == 0 ? 0 : n == 1 ? 1 : fib ( n - 1 ) + fib ( n - 2 ); }",
   "fibonacci(int nth) { if(nth == 0) { return 0; } else if(nth == 1) { return 1; } else { return fibonacci(nth-1)+fibonacci(nth-2); } }",
-  "fibNth ( int n ) { if ( n == 0 ) { return 0 ; } else if ( n == 1 ) { return 1 ; } else { return fibNth ( n - 1 ) + fibNth ( n - 2 ); } }"
+  "fibNth ( int n ) { if ( n == 0 ) { return 0 ; } else if ( n == 1 ) { return 1 ; } else { return fibNth ( n - 1 ) + fibNth ( n - 2 ); } }",
+  "inArray ( int [ ] array, int element ) { for ( int i = 0 ; i < array. length ; i++ ) { if ( array [ i ] == element ) return true ; } return false ; }",
+  "has ( int [] arr, int element ) { boolean exists = false ; for ( int j = 0 ; j < arr. length ; ++ j ) { if ( arr [ j ] == element ) { exists = true ; } } return exists ; }",
+  "isIn(int[] array, int value) { for (int index = 0; index < array.length; index++) { if (array[index] == value) { return true; } } return false; }",
 ]
 
 for program in programs:
@@ -36,3 +35,4 @@ for program in programs:
   print("\tNumber of brackets: ", numBrackets(program))
   print("\tNumber of characters:  ", len(program))
   print("\tTime complexity: ", timeComplexity(program))
+  print("\n")

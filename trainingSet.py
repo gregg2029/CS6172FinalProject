@@ -4,10 +4,10 @@ trainingSet = [
   ["def find_object(target_obj, arr):\n    for item in arr:\n        if item == target_obj:\n            return True\n\n    return False", "Acceptable"],
   ["def elem_in_list(element, check_list):\n  len_list = len(check_list)\n  for ind in range(len_list):\n    if check_list[ind] == element:\n      return True\n  \n  return False", "Difficult"],
   ["def obj_in_array(target_obj, arr):\n    return next(filter(lambda arr_item: arr_item == target_obj, arr), None) != None", "Unreadable"],
+  # java
   ["inArray ( int [ ] array, int element ) { for ( int i = 0 ; i < array. length ; i++ ) { if ( array [ i ] == element ) return true ; } return false ; }", "Readable"],
   ["has ( int [] arr, int element ) { boolean exists = false ; for ( int j = 0 ; j < arr. length ; ++ j ) { if ( arr [ j ] == element ) { exists = true ; } } return exists ; }", "Readable"],
   ["isIn(int[] array, int value) { for (int index = 0; index < array.length; index++) { if (array[index] == value) { return true; } } return false; }", "Readable"],
-  # java
   ["intArrayContains(int[] my_array, int an_element){ for (int element = 0; element < my_array.length; element++) { if (my_array[element] == an_element) return true; } return false; }", "Acceptable"],
   ["contains ( int [] a , int item ) { for ( int i = 0 ; i < a . length ; i ++) { if ( a [ i ]== item ) return true ; } return false ; }", "Acceptable"],
   ["findInArray(int[] array, int item) { boolean result = false; for (int i=0; i<array.length; i++) { if (item == array[i]) result = true; } if (result == true) return true; else return false; }", "Unreadable"],
