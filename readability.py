@@ -21,7 +21,7 @@ def classifier(query):
         model="davinci-codex",
         logprobs=5,
         labels=labels,
-        max_examples=2,
+        max_examples=6,
         examples= trainingSet
     )
 
