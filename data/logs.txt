@@ -1,0 +1,124 @@
+	Code:  fib ( int n ) { if ( n < 2 ) return n ; else return fib ( n - 1 ) + fib ( n - 2 ); }
+	Score:  20.27048733089094
+	Number of brackets:  1
+	Number of characters:   84
+	Time complexity:   exponential - note that for every addition of every
+	
+	Code:  valueN(int n ) { return n <= 2 ? 1 : valueN(n - 1) + valueN(n - 2); }
+	Score:  21.29059429438658
+	Number of brackets:  1
+	Number of characters:   69
+	Time complexity:   exponential O(unreachable)
+	
+	Code:  fibonacci ( int i ) { if ( i == 0 ) { return 0 ; } else if ( i == 1 ) { return 1 ; } else { return fibonacci ( i - 1 ) + fibonacci ( i - 2 ); } }
+	Score:  23.889146380594667
+	Number of brackets:  4
+	Number of characters:   145
+	Time complexity:   2^N, a polynomial.
+	
+	Code:  getFibValue(int i) { if (i <= 1) { return i; } else { return getFibValue(i-2) + getFibValue(i-1); } }
+	Score:  23.591225041147208
+	Number of brackets:  3
+	Number of characters:   101
+	Time complexity:   O(2^n) due to the recursion tree
+	
+	Code:  intArrayContains(int[] my_array, int an_element){ for (int element = 0; element < my_array.length; element++) { if (my_array[element] == an_element) return true; } return false; }
+	Score:  17.347409792321862
+	Number of brackets:  2
+	Number of characters:   179
+	Time complexity:   O(n), where n is the length of the array.
+	
+	Code:  contains ( int [] a , int item ) { for ( int i = 0 ; i < a . length ; i ++) { if ( a [ i ]== item ) return true ; } return false ; }
+	Score:  14.990855678281552
+	Number of brackets:  2
+	Number of characters:   132
+	Time complexity:   O ( n ) .
+	
+	Code:  findInArray(int[] array, int item) { boolean result = false; for (int i=0; i<array.length; i++) { if (item == array[i]) result = true; } if (result == true) return true; else return false; }
+	Score:  73.77842801747818
+	Number of brackets:  2
+	Number of characters:   190
+	Time complexity:  : O(n)
+	Code:  contains( int [] arr, int i) { for ( int c = 0 ; c<arr.length; c++) if (arr[c] == i) return true ; return false ; }
+	Score:  14.870033341926597
+	Number of brackets:  1
+	Number of characters:   115
+	Time complexity:   O(log n ) where n is the length of array .
+	
+	Code:  isInside(int[] i, int item) { for (int i2 = 0; i2 <= i.length - 1; i2++) { if (i[i2] == item) { return true; } } return false; }
+	Score:  75.62459554710809
+	Number of brackets:  3
+	Number of characters:   128
+	Time complexity:   O(N*M) where N is the size of `int[
+		
+	Code:  is(int[] a, int value) { for(int i=0;i< a.length;i++) { if(a[i]== value) { return true; } } return false; }
+	Score:  57.107369396465934
+	Number of brackets:  3
+	Number of characters:   107
+	Time complexity:   O(n).
+	
+	Code:  def add_one(arr):
+  new_arr = []
+  for elem in arr:
+    new_elem = elem + 1
+    new_arr.append(new_elem)
+  return new_arr
+	Score:  4.679264144524981
+	Number of brackets:  0
+	Number of characters:   121
+	Time complexity:   N.
+	
+	Code:  def add_one(arr):
+  new_arr = []
+  for elem in arr:
+    new_arr.append(elem + 1)
+  return new_arr
+	Score:  10.618478979632803
+	Number of brackets:  0
+	Number of characters:   97
+	Time complexity:   O(n). Why?
+	
+	Code:  def add_one(arr):
+  return [elem + 1 for elem in arr]
+	Score:  11.00364458804536
+	Number of brackets:  0
+	Number of characters:   53
+	Time complexity:   O(n). - O(1) is constant basically it means how
+	
+	Code:  def add_one(arr):
+  return map(lambda x: x + 1, arr)
+	Score:  14.038885210532207
+	Number of brackets:  0
+	Number of characters:   52
+	Time complexity:   O(n), where n is the length of `arr`.
+	
+	Code:  fibonacci(int n) { if (n < 2) return n; return fibonacci(n - 1) + fibonacci(n - 2); }
+	Score:  12.108091131445608
+	Number of brackets:  1
+	Number of characters:   85
+	Time complexity:   not efficient compared to better overall time complexity solution for calculationg nth Fib
+	
+	Code:  fibonacci(int n) { if(n < 2) { return n; } else { return fibonacci(n - 2) + fibonacci(n - 1); } }
+	Score:  13.58276935956369
+	Number of brackets:  3
+	Number of characters:   97
+	Time complexity:   O(2^N).
+	
+	Code:  fib ( int n ){ return n == 0 ? 0 : n == 1 ? 1 : fib ( n - 1 ) + fib ( n - 2 ); }
+	Score:  60.86983560571766
+	Number of brackets:  1
+	Number of characters:   80
+	Time complexity:   exponential, O(2^n). We can see this because the number
+	
+	Code:  fibonacci(int nth) { if(nth == 0) { return 0; } else if(nth == 1) { return 1; } else { return fibonacci(nth-1)+fibonacci(nth-2); } }
+	Score:  15.002291401514988
+	Number of brackets:  4
+	Number of characters:   132
+	Time complexity:   O(2^N). In the worst case, a function will run
+	
+	Code:  fibNth ( int n ) { if ( n == 0 ) { return 0 ; } else if ( n == 1 ) { return 1 ; } else { return fibNth ( n - 1 ) + fibNth ( n - 2 ); } }
+	Score:  18.752599207289173
+	Number of brackets:  4
+	Number of characters:   136
+	Time complexity:   O(n)
+	
