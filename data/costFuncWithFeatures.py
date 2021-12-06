@@ -1,4 +1,4 @@
-from features import numSemicolan, lengthOfCode
+from data.features import numSemicolan, lengthOfCode
 
 
 programAndCodexScore = [
@@ -22,17 +22,17 @@ programAndCodexScore = [
   ("isIn(int[] array, int value) { for (int index = 0; index < array.length; index++) { if (array[index] == value) { return true; } } return false; }", 22.54680451),
 ]
 
-def myCost(program, score):
+def featureBasedCost(program):
   numChar = len(program)
   numberOfSemicolan = numSemicolan(program)
   functionalLength = lengthOfCode(program)
 
   feature = numChar
   weight = 1/(functionalLength*numberOfSemicolan)
-  return score + feature * weight
+  return feature * weight
 
 for program, score in programAndCodexScore:
   print("program:")
   print(program)
   print("old score: ", score)
-  print("new score: ", myCost(program, score))
+  print("new score: ", featureBasedCost(program))
